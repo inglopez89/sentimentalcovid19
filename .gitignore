@@ -1,0 +1,11 @@
+[
+	{"key": "pychache"
+	 "name": "__pycache__"
+	},
+	{"key": "idea"
+	 "name": ".idea/"
+	},
+	{"key":"twitter_key.json"
+	 "name":"functions/config/twitter_key.json"
+	}
+]
