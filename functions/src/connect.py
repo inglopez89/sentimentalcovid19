@@ -2,17 +2,30 @@ import tweepy as tw
 from io import open
 import logging
 import json
+import sys
+__author__: 'Camilo Lopez Ruiz'
+__version__: '1.0'
 
 
 class Connections:
-
+    """
+    this is the class for connect to different sources
+    """
     def __init__(self, type_connect, file_params):
+        """
+        :param type_connect: This param specify type of connection
+        :param file_params:  This param search the file for connect to api
+        """
         self.type_connect = type_connect
         self.params = file_params
         logging.basicConfig(format='%(acstime)s : %(levelname)s : (messages)s')
         self.logger = logging.getLogger()
 
     def get_connect(self):
+        """
+        This method get the connection and return this connection
+        :return api: return api connection value
+        """
         try:
             if self.type_connect == 'twitter':
                 api = self.__twitter_connect()
@@ -26,7 +39,7 @@ class Connections:
 
     def __twitter_connect(self):
         """
-        This method create connect for twitter with tweepy
+        This private method create connect for twitter with tweepy
         :return: Api connect to extract tweets
         """
         try:
@@ -47,6 +60,7 @@ class Connections:
             else:
                 self.logger.info('The connect fail try again or verify '
                                  'the params')
+                sys.exit()
         except Exception as e:
             self.logger.error('An error has occurred when trying connect'
                               'to twitter info: ', e)
