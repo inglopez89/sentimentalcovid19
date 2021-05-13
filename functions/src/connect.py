@@ -1,5 +1,7 @@
 import tweepy as tw
+from google.cloud import bigquery as bq
 from io import open
+import os
 import logging
 import json
 import sys
@@ -31,7 +33,7 @@ class Connections:
                 api = self.__twitter_connect()
                 return api
             elif self.type_connect == 'bigquery':
-                print('work on it')
+                bq_client = self.__bigquery_connect()
             else:
                 self.logger.info('this type does\'nt exists')
         except Exception as e:
@@ -64,3 +66,15 @@ class Connections:
         except Exception as e:
             self.logger.error('An error has occurred when trying connect'
                               'to twitter info: ', e)
+
+    def __bigquery_connect(self):
+        try:
+            self.logger.info('The connection for bigquery has begin')
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.params
+            bq_client = bq.Client('sentimentalCovid19')
+            bq_client.get_dataset('stagging_data')
+            print(bq_client)
+            return bq_client
+        except Exception as e:
+            self.logger.error('An error has occurred info: ', e)
+
