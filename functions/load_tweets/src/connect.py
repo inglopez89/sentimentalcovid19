@@ -20,7 +20,7 @@ class Connections:
         """
         self.type_connect = type_connect
         self.params = file_params
-        logging.basicConfig(format='%(acstime)s : %(levelname)s : (messages)s')
+        logging.basicConfig(format='%(acstime)s : %(levelname)s : %(messages)s')
         self.logger = logging.getLogger()
 
     def get_connect(self):
@@ -34,8 +34,9 @@ class Connections:
                 return api
             elif self.type_connect == 'bigquery':
                 bq_client = self.__bigquery_connect()
+                return bq_client
             else:
-                self.logger.info('this type does\'nt exists')
+                self.logger.info('this type doesn\'t exists')
         except Exception as e:
             self.logger.error('An error has occurred info: ', e)
 
@@ -64,17 +65,15 @@ class Connections:
                                  'the params')
                 sys.exit()
         except Exception as e:
-            self.logger.error('An error has occurred when trying connect'
-                              'to twitter info: ', e)
+            self.logger.error('An error has occurred when trying '
+                              'connect info: ', e)
+            sys.exit()
 
     def __bigquery_connect(self):
         try:
             self.logger.info('The connection for bigquery has begin')
             os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.params
-            bq_client = bq.Client('sentimentalCovid19')
-            bq_client.get_dataset('stagging_data')
-            print(bq_client)
+            bq_client = bq.Client('sentimentalcovid19')
             return bq_client
         except Exception as e:
             self.logger.error('An error has occurred info: ', e)
-
