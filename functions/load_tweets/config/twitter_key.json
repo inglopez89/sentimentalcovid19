@@ -1,6 +1,6 @@
 {
-"consumer_key":"k11zIyJPB3qsVhdDOPADymNDy",
-"consumer_secret":"VN8doHpmKHpbaN8EZl1zRxIyQnQ82ke1Pbn9DaUFbiKjZsI2x4",
-"access_token_key":"1389684286157164544-QJU46comrVG8sKOnY8AfBUAEJlsPJY",
-"access_token_secret":"cyGAb7ayEretLQVLnnN11Jp3oaUT7PculPYVgttwFKqGz"
+"consumer_key":"api key",
+"consumer_secret":"your secret key",
+"access_token_key":"your token key",
+"access_token_secret":"your token key"
 }
