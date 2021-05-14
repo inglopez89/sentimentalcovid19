@@ -1,0 +1,5 @@
+google-cloud-bigquery==2.16.0
+pandas-gbq==0.15.0
+pandas==1.2.4
+pyarrow==4.0.0
+tweepy==3.10.0
