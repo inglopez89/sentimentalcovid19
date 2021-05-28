@@ -3,7 +3,7 @@ from .connect import Connections
 import logging
 
 
-class Load(Connections):
+class Load:
     """
     this class is for load dataframe of tweets extracted
     """
@@ -11,7 +11,7 @@ class Load(Connections):
         logging.basicConfig(format='%(acstime)s : %(levelname)s : %(message)s')
         self.logger = logging.getLogger()
         self.file_params = '../load_tweets/config/BigQuery.json'
-        Connections.__init__(self, 'bigquery', self.file_params)
+        self.connections = Connections(self, 'bigquery', self.file_params)
 
     def load_bigquery(self, df, project, dataset, table):
         """
@@ -24,7 +24,7 @@ class Load(Connections):
         """
         try:
             self.logger.info('Load bigquery has began')
-            Connections.get_connect(self)
+            self.connections.get_connect(self)
             pbq.to_gbq(df, dataset + '.' + table, project, if_exists='append')
         except Exception as e:
             self.logger.error('An error has occurred info : ', e)

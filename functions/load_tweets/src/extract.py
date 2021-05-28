@@ -6,7 +6,7 @@ __author__: 'Camilo Lopez Ruiz'
 __version__: '1.0'
 
 
-class Extractions(Connections):
+class Extractions():
     """
     This Class is for extract the information
     """
@@ -18,7 +18,7 @@ class Extractions(Connections):
         logging.basicConfig(format='%(acstime)s : %(levelname)s : %(message)s')
         self.logger = logging.getLogger()
         self.file_params = '../load_tweets/config/twitter_key.json'
-        Connections.__init__(self, 'twitter', self.file_params)
+        self.connections = Connections(self, 'twitter', self.file_params)
 
     def twitter_extract(self, terms_search, items):
         """
@@ -29,7 +29,7 @@ class Extractions(Connections):
         """
         try:
             self.logger.info('The twitter extract has begin')
-            api = Connections.get_connect(self)
+            api = self.connections.get_connect(self)
             tweets = tw.Cursor(api.search, q=terms_search,
                                tweet_mode='extended').items(items)
             df = pd.DataFrame({})

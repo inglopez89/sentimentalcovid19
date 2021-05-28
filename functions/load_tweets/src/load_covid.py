@@ -18,14 +18,13 @@ class LoadCovid:
         self.extract_tweets = Extractions()
         self.load_bigquery = Load()
 
-
-    def load_tweets_covid(self):
+    def load_tweets_covid(self, terms, items):
         """
         This method make a extraction and load to bigquery table the tweets
         extracted.
         :return:
         """
-        dataframe = self.extract_tweets.twitter_extract('#your hastag or word', 1)
+        dataframe = self.extract_tweets.twitter_extract(terms, items)
         if dataframe is None:
             self.logger.info('Dataframe is empty')
             sys.exit()
