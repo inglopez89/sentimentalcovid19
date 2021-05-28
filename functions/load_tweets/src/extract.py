@@ -6,19 +6,18 @@ __author__: 'Camilo Lopez Ruiz'
 __version__: '1.0'
 
 
-class Extractions():
+class Extractions(Connections):
     """
     This Class is for extract the information
     """
-    def __init__(self):
+    def __init__(self, file_params):
         """
         for authenticate if is twitter see the structure file, for bigquery
         specify the source.
         """
+        Connections.__init__(self, 'twitter', file_params)
         logging.basicConfig(format='%(acstime)s : %(levelname)s : %(message)s')
         self.logger = logging.getLogger()
-        self.file_params = '../load_tweets/config/twitter_key.json'
-        self.connections = Connections(self, 'twitter', self.file_params)
 
     def twitter_extract(self, terms_search, items):
         """
@@ -29,7 +28,7 @@ class Extractions():
         """
         try:
             self.logger.info('The twitter extract has begin')
-            api = self.connections.get_connect(self)
+            api = Connections.get_connect(self)
             tweets = tw.Cursor(api.search, q=terms_search,
                                tweet_mode='extended').items(items)
             df = pd.DataFrame({})

@@ -12,11 +12,12 @@ class LoadCovid:
     """
 
     def __init__(self):
+        self.extract_twitter = \
+            Extractions('../load_tweets/config/twitter_key.json')
+        self.load_bigquery = Load('../load_tweets/config/BigQuery.json')
         logging.basicConfig(format='%(acstime)s : %(levelname)s : %(message)s')
         self.logger = logging.getLogger()
         self.project_id = 'sentimentalcovid19'
-        self.extract_tweets = Extractions()
-        self.load_bigquery = Load()
 
     def load_tweets_covid(self, terms, items):
         """
@@ -24,10 +25,14 @@ class LoadCovid:
         extracted.
         :return:
         """
-        dataframe = self.extract_tweets.twitter_extract(terms, items)
+        dataframe = self.extract_twitter.twitter_extract(terms, items)
         if dataframe is None:
             self.logger.info('Dataframe is empty')
             sys.exit()
         else:
             self.load_bigquery.load_bigquery(dataframe, self.project_id,
                                              'stagging_data', 'tweet')
+
+if __name__ == '__main__':
+    execute = LoadCovid()
+    execute.load_tweets_covid('#YoMeVacuno OR #Vacuna', 10)
