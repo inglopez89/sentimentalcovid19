@@ -10,5 +10,14 @@
 	},
 	{"key":"BigQuery.json"
 	 "name":"functions/config/BigQuery.json"
+	},
+	{"key":"DS_Store"
+	 "name":"../../.DS_Store"
+	},
+	{"key":"DS_Store"
+	 "name":".././.DS_Store"
+	},
+	{"key":"DS_Store"
+	 "name":".DS_Store"
 	}
 ]
