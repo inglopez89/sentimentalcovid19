@@ -1,6 +1,8 @@
 from .connect import Connections
 import tweepy as tw
 import pandas as pd
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import logging
 __author__: 'Camilo Lopez Ruiz'
 __version__: '1.0'
@@ -29,7 +31,15 @@ class Extractions(Connections):
         try:
             self.logger.info('The twitter extract has begin')
             api = Connections.get_connect(self)
-            tweets = tw.Cursor(api.search, q=terms_search,
+            places = api.geo_search(query='COLOMBIA', granularity='country')
+            date_extract = datetime.now() - relativedelta(months=14)
+            date_extract = date_extract.date()
+            date_extract = ' since:' + str(date_extract)
+            place_id = places[0].id
+            place_id = ' place:' + place_id
+            tweets = tw.Cursor(api.search, q=terms_search + ' ' + place_id +
+                               ' ' + date_extract,
+                               #until=date_extract,
                                tweet_mode='extended').items(items)
             df = pd.DataFrame({})
             for t in tweets:

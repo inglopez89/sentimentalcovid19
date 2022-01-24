@@ -1,5 +1,6 @@
 from .extract import Extractions
 from .load import Load
+import pandas as pd
 import logging
 import sys
 __author__: 'Camilo Lopez Ruiz'
@@ -26,7 +27,7 @@ class LoadCovid:
         :return:
         """
         dataframe = self.extract_twitter.twitter_extract(terms, items)
-        if dataframe is None:
+        if dataframe.empty:
             self.logger.info('Dataframe is empty')
             sys.exit()
         else:
@@ -35,4 +36,4 @@ class LoadCovid:
 
 if __name__ == '__main__':
     execute = LoadCovid()
-    execute.load_tweets_covid('#YoMeVacuno OR #Vacuna', 10)
+    execute.load_tweets_covid('#YoMeVacuno OR #Vacuna', 1)
